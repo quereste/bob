@@ -43,14 +43,20 @@ for game_num in range(num_of_games):
 
       if currentPlayer in [1, 3]:
         print(f"{find_player(currentPlayer)} to play")
+        allowedCard = -1
+        if len(played_cards) > 0:
+          allowedCard = played_cards[0]
+        allowed_cards = allowedCards(cards[currentPlayer], allowedCard)
         while True:
           n = int(input('Enter a card: '))
-          if n in cards[currentPlayer]:
+          if n not in cards[currentPlayer]:
+            print("You do not posses such card. Try again.")
+          elif allowed_cards[n] == 0:
+            print("It is illegal to play this card right now. Try again.")
+          else:
             played_cards.append(n)
             cards[currentPlayer].remove(n)
             break
-          else:
-            print("You do not posses such card. Try again.")
       else:
         allowedCard = -1
         if len(played_cards) > 0:
